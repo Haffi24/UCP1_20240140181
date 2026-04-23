@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Anggota - Tech Community</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="./index.html">Tech Community</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="./index.html">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="./form.html">Daftar Anggota</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./gallery.html">Multimedia</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Form Pendaftaran Anggota Baru</h5>
+                        <a href="./index.html" class="btn btn-sm btn-outline-light">Kembali ke Beranda</a>
+                    </div>
+                    <div class="card-body">
+                        <form id="formDaftar">
+                            <div class="mb-3">
+                                <label class="form-label">Nama Lengkap</label>
+                                <input type="text" id="inputNama" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" id="inputEmail" class="form-control" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Minat Teknologi</label>
+                                <select id="inputMinat" class="form-select" required>
+                                    <option value="" disabled selected>Pilih salah satu...</option>
+                                    <option value="Web Development">Web Development</option>
+                                    <option value="Database / SQL">Database / SQL</option>
+                                    <option value="Cybersecurity">Cybersecurity</option>
+                                    <option value="Networking">Networking</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Simpan Data</button>
+                        </form>
+
+                        <div id="hasilInput" class="mt-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inisialisasi array kosong
+        let arrayAnggotaBaru = JSON.parse(localStorage.getItem('anggotaBaru')) || [];
+
+        document.getElementById('formDaftar').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah reload halaman
+
+            // Menangkap data dari form
+            let nama = document.getElementById('inputNama').value;
+            let email = document.getElementById('inputEmail').value;
+            let minat = document.getElementById('inputMinat').value;
+
+            // Memasukkan data ke dalam object lalu ke array
+            let dataBaru = { nama: nama, email: email, minat: minat };
+            arrayAnggotaBaru.push(dataBaru);
+
+            // Simpan ke localStorage (Simulasi database agar tampil di halaman index)
+            localStorage.setItem('anggotaBaru', JSON.stringify(arrayAnggotaBaru));
+
+            // Menampilkan Alert
+            alert("Data berhasil ditambahkan sementara!");
+
+            // Menampilkan hasil di bagian bawah form
+            document.getElementById('hasilInput').innerHTML = `
+                <div class="alert alert-success">
+                    <strong>Pendaftaran Berhasil!</strong><br>
+                    Nama: ${nama} <br>
+                    Email: ${email} <br>
+                    Minat: ${minat}
+                </div>
+            `;
+
+            // Reset form setelah disubmit
+            document.getElementById('formDaftar').reset();
+        });
+    </script>
+</body>
+</html>
